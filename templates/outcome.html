@@ -4,6 +4,12 @@
 
 {% block content %}
 <div class="span12">
+	<p>Downloadable: 
+		<a href="/checker/errors/{{checklog.key().id()}}?format=csv">CSV</a>
+		<a href="/checker/errors/{{checklog.key().id()}}?format=json">JSON</a>
+	</p>
+</div>
+<div class="span12">
 	<table class="table-striped">
 		<thead>
 			<tr>
@@ -27,8 +33,5 @@
 		</tbody>
 	</table>
 </div>
-<!-- <div class="span10 offset2">
-	<p>To download these as a spreadsheet, click <a href="/checker/download?id={{ content_check_id }}">here</a>	
-</div>	 -->
 {% endblock %}
 
