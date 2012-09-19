@@ -111,7 +111,7 @@ class ContentChecker(BaseHandler):
     elif sheet.filename.endswith("Template.xlsx"):
       # TODO: Error this
       self.add_error("File name doesn't match pattern")
-      self.redirect("contentcheck", {})
+      self.render_jinja("contentcheck", {})
     if users.get_current_user():
       checklog = model.CheckLog(user=users.get_current_user(), sheet=sheet.filename)
       checklog.put()
