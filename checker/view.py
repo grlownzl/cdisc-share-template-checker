@@ -38,7 +38,7 @@ class BaseHandler(webapp2.RequestHandler):
     try:
       template = jinja_environment.get_template('%s.html' % name)
     except jinja2.TemplateNotFound:
-      self.redirect("/checker")
+      return self.redirect("/checker")
     self.response.out.write(template.render(data))
         
 class ContentCheckRules(BaseHandler):
