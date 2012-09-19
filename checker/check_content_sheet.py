@@ -356,9 +356,7 @@ class ContentSheetChecker(object):
           COLS = COLUMNS.get('TEMPLATE')
         if len(row) != len(COLS):
           _COLS = [si(x) for x in row]
-          extra = ','.join(set(_COLS) - set(COLS))
-          missing = ','.join(set(COLS) - set(_COLS))
-          self.log("", "HEADINGS", "Number of columns doesn't meet expectations: extras '%s' - missing '%s'" % (extra, missing))
+          self.log("ALL", "HEADINGS", "Columns are incorrect: Please check")
           COLS = _COLS
         break
     # yuck
