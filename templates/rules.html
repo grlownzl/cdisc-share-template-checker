@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Rules{% endblock %}
+
+{% block content %}
+<div class="span8">
+	<h3> Configured Rules </h3>
+	<ul>
+		{% for rule in rules %}
+		<li>{{ rule }}</li>
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

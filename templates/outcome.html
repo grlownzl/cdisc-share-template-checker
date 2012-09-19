@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Consistency Check for {{ checklog.sheet }}{% endblock %}
+
+{% block content %}
+<div class="span12">
+	<table class="table-striped">
+		<thead>
+			<tr>
+				<th>Sheet</th>
+				<th>Field</th>
+				<th>Column</th>
+				<th>Issue</th>
+				<th>Category</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for issue in checklog.findings %}
+			<tr>
+				<td>{{ issue.tab }}</td>
+				<td>{{ issue.field }}</td>
+				<td>{{ issue.column }}</td>
+				<td>{{ issue.message|escape }}</td>
+				<td>{{ issue.category }}</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+<!-- <div class="span10 offset2">
+	<p>To download these as a spreadsheet, click <a href="/checker/download?id={{ content_check_id }}">here</a>	
+</div>	 -->
+{% endblock %}
+
