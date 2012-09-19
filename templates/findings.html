@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}All Findings{% endblock %}
+
+{% block content %}
+<div class="span12">
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<td>Template</td>
+			<td>Date</td>
+			<td>Run by</td>
+			<td>Findings</td>
+		</tr>
+	</thead>
+	<tbody>
+		{% for check_run in checklogs %}
+		<tr>
+			<td>{{ check_run.sheet }}</td>
+			<td>{{ check_run.date }}</td>
+			<td>{{ check_run.opener.email() }}</td>
+			<td><a href="/checker/error/{{check_run.key().id()}}">Link</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+</div>
+{% endblock %}
