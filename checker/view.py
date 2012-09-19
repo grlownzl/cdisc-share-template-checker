@@ -49,7 +49,13 @@ class ContentCheckRules(BaseHandler):
     checker = ContentSheetChecker()
     template_values = {'rules' : checker.rule_specifications}
     self.render_jinja("rules", template_values)
-    
+
+class ContentCheckReports(BaseHandler):
+  
+  def get(self):
+    checklogs = model.CheckLog.all()
+    self.render_jinja("findings", {"checklogs" : checklogs})
+        
 class ContentCheckError(BaseHandler):
   """
   Presents the errors

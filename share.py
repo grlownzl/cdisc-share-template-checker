@@ -18,6 +18,7 @@ routes = [('/', MainPage),
           ('/checker[/]?', view.ContentChecker),
           ('/checker/error/(\d+)', view.ContentCheckError),
           ('/checker/rules[/]?', view.ContentCheckRules),
+          ('/checker/findings[/]?', view.ContentCheckReports),
           ('/checker/(.+)', view.ContentGenericRenderer),
           ]
 
