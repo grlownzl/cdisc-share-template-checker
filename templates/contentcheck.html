@@ -7,8 +7,9 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$('#content-form').validate({
- 		 submitHandler: function(form) {
-   		form.submit();
+		 submitHandler: function(form) {
+			//$().button('loading');
+			form.submit();
  	 	}
 		});
 	});
@@ -25,7 +26,8 @@
 					<input type="file" name="content_sheet" size="80" class="required"/>
 				</div>
 				<div class="form-actions">
-					<input class="submit" type="submit" value="Submit"/>
+					<!-- <button type="button" class="btn btn-primary" data-loading-text="Loading...">Load Content Template</button> -->
+					<input class="submit" name="sub" type="submit" value="Submit"/>
 				</div>
 			</fieldset>
 	  </form>
