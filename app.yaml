@@ -7,14 +7,21 @@ threadsafe: true
 handlers:
 - url: /css
   static_dir: static/css
+
 - url: /js
   static_dir: static/js
+
 - url: /img
   static_dir: static/img
+
+- url: /favicon.ico
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon.ico
 
 - url: /.*
   script: share.app
   login: required
+
 - url: /checker/.*
   script: share.app
   login: required
