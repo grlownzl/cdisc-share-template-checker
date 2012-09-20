@@ -19,7 +19,7 @@
 			<td>{{ check_run.sheet }}</td>
 			<td>{{ check_run.date }}</td>
 			<td>{{ check_run.opener.email() }}</td>
-			<td><a href="/checker/error/{{check_run.key().id()}}">Link</a></td>
+			<td>{% if check_run.findings.count() > 0 %}<a href="/checker/error/{{check_run.key().id()}}">Link</a>{% endif %}</td>
 		</tr>
 		{% endfor %}
 	</tbody>
