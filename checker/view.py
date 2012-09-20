@@ -1,4 +1,5 @@
 import webapp2
+from webapp2_extras import sessions
 import os
 import json
 import csv
@@ -15,26 +16,32 @@ jinja_environment = jinja2.Environment(
 import model
 
 class BaseHandler(webapp2.RequestHandler):
-  # hold the errors
-  ERRORS = []
-  
-  @classmethod
-  def add_error(cls, error):
-    if not error in cls.ERRORS:
-      cls.ERRORS.append(error)
-  
-  @classmethod
-  def get_errors(cls):
-    return cls.ERRORS
-  
-  @classmethod
-  def clear_errors(cls):
-    cls.ERRORS = []
+
+  def dispatch(self):
+    # Get a session store for this request.
+    self.session_store = sessions.get_store(request=self.request)
+    try:
+      # Dispatch the request.
+      webapp2.RequestHandler.dispatch(self)
+    finally:
+      # Save all sessions.
+      self.session_store.save_sessions(self.response)
+
+  @webapp2.cached_property
+  def session(self):
+    # Returns a session using the default cookie key.
+    return self.session_store.get_session()    
     
+  MESSAGE_KEY = '_flash_message'
+  def add_message(self, message, level=None):
+		self.session.add_flash(message, level, BaseHandler.MESSAGE_KEY)
+  
+  def get_messages(self):
+  	return self.session.get_flashes(BaseHandler.MESSAGE_KEY)
+  
   def render_jinja(self, name, data):
     data['logout_url']=users.create_logout_url(self.request.uri)
-    data['errors'] = self.get_errors()
-    self.clear_errors()
+    data['errors'] = self.get_messages()
     try:
       template = jinja_environment.get_template('%s.html' % name)
     except jinja2.TemplateNotFound:
@@ -65,15 +72,15 @@ class ContentCheckError(BaseHandler):
       checklog = model.CheckLog.get_by_id(int(check_id))
     except ValueError:
       # TODO: error
-      self.add_error("Can't convert supplied id %s" % check_id)
+      self.add_message("Can't convert supplied id %s" % check_id)
       self.render_jinja("contentchecker", {})
     if not checklog:
       # TODO: error
-      self.add_error("No matching CheckLog with id %s" % check_id)
+      self.add_message("No matching CheckLog with id %s" % check_id)
       self.render_jinja("contentchecker", {})
     if checklog.findings.count() == 0:
       # TODO: error - no errors exist
-      self.add_error("CheckLog with id %s has no issues" % check_id)
+      self.add_message("CheckLog with id %s has no issues" % check_id)
       self.render_jinja("contentchecker", {})
     else:
       if self.request.get("format"):
@@ -89,7 +96,7 @@ class ContentCheckError(BaseHandler):
           self.response.headers["Content-type"] = "application/json"
           self.response.out.write(json.dumps([x.as_dict() for x in checklog.findings]))
         else:
-          self.add_error("Format %s not recognised" % self.request.get('format'))
+          self.add_message("Format %s not recognised" % self.request.get('format'))
           return self.redirect("/checker/errors/%s" % checker.key().id())
       else:
         template_values = {'checklog' : checklog}
@@ -106,11 +113,11 @@ class ContentChecker(BaseHandler):
     sheet = self.request.POST["content_sheet"]
     if not hasattr(sheet, "filename"):
       # TODO: Error this
-      self.add_error("No file")
+      self.add_message("No file")
       self.render_jinja("contentcheck", {})
     elif sheet.filename.endswith("Template.xlsx"):
       # TODO: Error this
-      self.add_error("File name doesn't match pattern")
+      self.add_message("File name doesn't match pattern")
       self.render_jinja("contentcheck", {})
     if users.get_current_user():
       checklog = model.CheckLog(user=users.get_current_user(), sheet=sheet.filename)
