@@ -22,5 +22,11 @@ routes = [('/', MainPage),
           ('/checker/(.+)', view.ContentGenericRenderer),
           ]
 
+config = {}
+config['webapp2_extras.sessions'] = {
+    'secret_key': '24d9b21e11612e365cae12282ba11ec661284d3d',
+}
+
 app = webapp2.WSGIApplication(routes,
+                              config=config,
                               debug=True)
