@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for check_run in checklogs %}
+		{% for check_run in checklogs|sort %}
 		<tr>
 			<td>{{ check_run.sheet }}</td>
 			<td>{{ check_run.date }}</td>
