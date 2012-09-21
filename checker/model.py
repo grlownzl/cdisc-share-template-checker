@@ -39,4 +39,10 @@ class ConsistencyFinding(db.Model):
             field,
             self.column,
             '"%s"' % self.message]
+
+class CodedTerminology(db.Model):
+  name = db.StringProperty(verbose_name="Term to be coded", required=True)
+  code = db.StringProperty(verbose_name="Assigned C-code")  
   
+  def is_coded(self):
+    return self.code != None
