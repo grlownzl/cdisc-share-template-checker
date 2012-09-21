@@ -299,6 +299,7 @@ class ContentSheetChecker(object):
   def load_from_mem(self, memobj):
     self.templates.append(memobj.filename)
     self.template = memobj.filename
+
     try:
       workbook = openpyxl.reader.excel.load_workbook(memobj.file)
     except Exception, e:
@@ -308,11 +309,12 @@ class ContentSheetChecker(object):
       return
     for sheet_name in workbook.get_sheet_names():
       sheet = workbook.get_sheet_by_name(sheet_name)
+      self.sheet = sheet_name
       if sheet.cell("A1").value.upper() not in ["BRIDG VERSION", "CONCEPT"]:
         # Only look at those with a BRIDG Version top left
         continue
       if sheet.cell("C1").value and sheet.cell("C1").value.upper() == "WIP":
-        self.log(sheet_name, "ALL", "ALL", "Sheet has been marked as Work in Progress and has not been scanned")
+        self.log("ALL", "ALL", "Sheet has been marked as Work in Progress and has not been scanned")
         continue
       self.sheet = sheet_name
       self.run_checks(sheet)
@@ -329,8 +331,12 @@ class ContentSheetChecker(object):
       return
     for sheet_name in workbook.get_sheet_names():
       sheet = workbook.get_sheet_by_name(sheet_name)
+      self.sheet = sheet_name
       if sheet.cell("A1").value.upper() not in ["BRIDG VERSION", "CONCEPT"]:
         # Only look at those with a BRIDG Version top left
+        continue
+      if sheet.cell("C1").value and sheet.cell("C1").value.upper() == "WIP":
+        self.log("ALL", "ALL", "Sheet has been marked as Work in Progress and has not been scanned")
         continue
       self.sheet = sheet_name
       self.run_checks(sheet)
@@ -345,10 +351,10 @@ class ContentSheetChecker(object):
         continue
       elif si(row[0]).upper() == "BRIDG VERSION":
         if not (si(row[1]) == BRIDG_VERSION or si(row[2]) == BRIDG_VERSION):
-            self.log("", si(row[0]), "BRIDG Version not set or not equal to %s" % BRIDG_VERSION)
+            self.log("ALL", si(row[0]), "BRIDG Version not set or not equal to %s" % BRIDG_VERSION)
       elif si(row[0]) == "Domain":
         if si(row[1]) == "":
-            self.log("", si(row[0]), "Domain not set")
+            self.log("ALL", si(row[0]), "Domain not set")
       elif si(row[0]).upper() == "VARIABLE NAME":
         if 'GENERIC' in self.sheet.upper():
           COLS = COLUMNS.get('GENERIC')
