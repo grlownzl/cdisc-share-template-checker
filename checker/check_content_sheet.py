@@ -379,6 +379,16 @@ class ContentSheetChecker(object):
       for rule in self.rules:
         rule.__call__(mapped)
 
+  def _run_codelist_master(self, row):
+    """
+    Check that, when CDASH Conceptual Datatype is Enumerated, a CodeList Master is supplied
+    """
+    if row.get("CDASH V1.1 Conceptual Datatype") == "Enumerated":
+      if row.get("Codelist Master")  == "":
+        self.log(row.get("Variable Name"),
+                "Codelist Master",
+                "CDASH Datatype is Enumerated, but no Codelist Master is present")
+    
   def _run_reverse_dependencies(self, row):
     """
     Check that a dependent column is missing if 'depends on' is not set, or set to a value excluding setting
