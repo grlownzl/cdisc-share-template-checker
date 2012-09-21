@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		{% for issue in checklog.findings %}
+		{% for issue in checklog.findings|sort %}
 			<tr>
 				<td>{{ issue.tab }}</td>
 				<td>{{ issue.field }}</td>
