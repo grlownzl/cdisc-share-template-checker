@@ -14,12 +14,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		{% for check_run in checklogs|sort %}
+		{% for check_run in checklogs %}
 		<tr>
 			<td>{{ check_run.sheet }}</td>
 			<td>{{ check_run.date }}</td>
 			<td>{{ check_run.opener.email() }}</td>
-			<td>{% if check_run.findings.count() > 0 %}<a href="/checker/error/{{check_run.key().id()}}">Link</a>{% endif %}</td>
+			<td>{% if check_run.findings.count() > 0 %}<a href="/content/checker/error/{{check_run.key().id()}}">Link</a>{% endif %}</td>
 		</tr>
 		{% endfor %}
 	</tbody>

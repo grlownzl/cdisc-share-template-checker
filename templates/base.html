@@ -35,19 +35,34 @@
 		</div>
 		{% endif %}
 		<div class="row-fluid">
-			<div id="sidebar" class="span1">
+			<div id="sidebar" class="span2">
     		{% block sidebar %}
-	    		<ul>
-	      	 <li><a href="/checker/">Content Checker</a></li>
-	      	 <li><a href="/checker/findings/">Findings</a></li>
-	      	 <li><a href="/checker/rules/">List of Rules in Use</a></li>
+        <ul>
+          <li>Content</li>
+          <ul>
+	      	 <li><a href="/content/checker/"><small>Content Checker</small></a></li>
+	      	 <li><a href="/content/checker/findings/"><small>Findings</small></a></li>
+	      	 <li><a href="/content/checker/rules/"><small>List of Rules in Use</small></a></li>
 	     		</ul>
-					<p>Currently logged in.</p>
+          <li>Terminology</li>
+          <ul>
+	      	 <li><a href="/terminology/codes/"><small>Controlled Terminology</small></a></li>
+	      	 <ul>
+             <li><a href="/terminology/codes/?filter=bridg"><small>BRIDG</small></a></li>
+             <li><a href="/terminology/codes/?filter=var"><small>Variables</small></a></li>
+             <li><a href="/terminology/codes/?filter=todo"><small>To code</small></a></li>
+             <li><a href="/terminology/codes/?filter=na"><small>Not codeable</small></a></li>
+           </ul>
+           <li><a href="/terminology/upload/"><small>Upload new Controlled Terminology</small></a></li>
+	     		</ul>
+          
+        </ul>
+          <p>Currently logged in.</p>
 					<p><a href="{{ logout_url }}">Logout</a></p>
     		{% endblock %}
     	</div>
 
-    	<div class="span11" id="content">
+    	<div class="span10" id="content">
       		{% block content %}{% endblock %}
     	</div>
 		</div>

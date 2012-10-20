@@ -5,12 +5,12 @@
 {% block content %}
 <div class="span12">
 	<p>Downloadable: 
-		<a href="/checker/error/{{checklog.key().id()}}?format=csv">CSV</a>
-		<a href="/checker/error/{{checklog.key().id()}}?format=json">JSON</a>
+		<a href="/content/checker/error/{{checklog.key().id()}}?format=csv">CSV</a>
+		<a href="/content/checker/error/{{checklog.key().id()}}?format=json">JSON</a>
 	</p>
 </div>
 <div class="span12">
-	<table class="table-striped">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>Sheet</th>
@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		{% for issue in checklog.findings|sort %}
+		{% for issue in checklog.findings.order("tab").order("field") %}
 			<tr>
 				<td>{{ issue.tab }}</td>
 				<td>{{ issue.field }}</td>
