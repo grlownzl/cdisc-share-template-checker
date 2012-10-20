@@ -22,6 +22,21 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+- kind: CodedTerminology
+  properties:
+  - name: code
+  - name: name
+
+- kind: CodedTerminology
+  properties:
+  - name: terminology_type
+  - name: name
+
+- kind: CodedTerminology
+  properties:
+  - name: to_code
+  - name: name
+
 - kind: ConsistencyFinding
   properties:
   - name: checkrun
