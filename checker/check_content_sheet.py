@@ -381,9 +381,11 @@ class ContentSheetChecker(object):
 
   def _run_codelist_master(self, row):
     """
-    Check that, when CDASH Conceptual Datatype is Enumerated, a CodeList Master is supplied
+    Check that, when CDASH Conceptual Datatype is Enumerated, a CodeList Master is supplied, except for --CAT, --SCAT, VISIT
     """
     if row.get("CDASH V1.1 Conceptual Datatype") == "Enumerated":
+      if row.get("Variable Name") in ["--SCAT", "--CAT", "VISIT"]:
+        return
       if row.get("Codelist Master")  == "":
         self.log(row.get("Variable Name"),
                 "Codelist Master",
@@ -427,7 +429,8 @@ class ContentSheetChecker(object):
                    "Variable name",
               "Variable %s is in a Concept Tab, but not in the Generic Tab" % row.get('Variable Name'))
       except TypeError:
-        print "Template Vars: %s" % self.template_vars.get(self.template)
+        #print "Template Vars: %s" % self.template_vars.get(self.template)
+        pass
     
   def _run_check_bridg_attributes_classes(self, row):
     """
@@ -515,7 +518,7 @@ if __name__ == "__main__":
     if candidate.endswith("Template.xls") or candidate.endswith("Template.xlsx"):
       print "Checking %s" % candidate
       checker.load_from_file(candidate)
-  print checker.as_dict()
+  #print checker.as_dict()
   checker.report()
         
     
