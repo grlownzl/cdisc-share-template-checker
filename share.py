@@ -10,16 +10,20 @@ class MainPage(webapp2.RequestHandler):
   def get(self):
     user = users.get_current_user()
     if user:
-      self.redirect("/checker/")
+      self.redirect("/content/checker/")
     else:
       self.redirect(users.create_login_url(self.request.uri))
 
 routes = [('/', MainPage),
-          ('/checker[/]?', view.ContentChecker),
-          ('/checker/error/(\d+)', view.ContentCheckError),
-          ('/checker/rules[/]?', view.ContentCheckRules),
-          ('/checker/findings[/]?', view.ContentCheckReports),
-          ('/checker/(.+)', view.ContentGenericRenderer),
+          ('/content/checker[/]?', view.ContentChecker),
+          ('/content/checker/error/(\d+)', view.ContentCheckError),
+          ('/content/checker/rules[/]?', view.ContentCheckRules),
+          ('/content/checker/findings[/]?', view.ContentCheckReports),
+          ('/content/checker/coffee', view.CoffeeTime),
+          ('/terminology[/]?', view.BulkTerminologyHandler),
+          ('/terminology/upload[/]?', view.BulkTerminologyUploadHandler),
+          ('/terminology/codes[/]?', view.BulkTerminologyHandler),
+          ('/terminology/code/(\d+)[/]?', view.TerminologyHandler),
           ]
 
 config = {}

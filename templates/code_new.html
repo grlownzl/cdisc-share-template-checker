@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add New Coding
+{% endblock %}
+{% block head %}
+	<script type="text/javascript" src="/js/jquery.validate.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#content-form').validate({
+		 submitHandler: function(form) {
+			//$().button('loading');
+			form.submit();
+ 	 	}
+		});
+	});
+	</script>
+	{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="span12">
+    <h3>Add Controlled Terminology</h3>
+  	 <form id="code-form" action="" method="post" enctype="multipart/form-data" class="cmxform">
+  		 <fieldset>
+  			<legend>Add Controlled Terminology Term</legend>
+  			<div class="control-group">
+  				<label for="code_name">Coded Term:</label>
+  				<input type="text" name="code_name" size="80" class="required"/>
+  			</div>
+  			<div class="control-group">
+  				<label for="code_name">Assigned C-code:</label>
+  				<input type="text" name="code_value" size="80" class="required"/>
+  			</div>
+  			<div class="control-group">
+  				<label for="code_name">Term Context:</label>
+  				<input type="radio" name="code_context" value="BRIDG">BRIDG</input>
+  				<input type="radio" name="code_context" value="VAR">VAR</input>
+  			</div>
+  			<div class="form-actions">
+  				<!-- <button type="button" class="btn btn-primary" data-loading-text="Loading...">Load Content Template</button> -->
+  				<input class="submit" name="sub" type="submit" value="Submit"/>
+  			</div>
+  		</fieldset>
+    </form>
+  </div>
+</div>
+{% endblock %}

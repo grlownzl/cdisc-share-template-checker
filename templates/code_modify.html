@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Modify coding for {{ code.name }}
+{% endblock %}
+{% block head %}
+	<script type="text/javascript" src="/js/jquery.validate.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#content-form').validate({
+		 submitHandler: function(form) {
+			//$().button('loading');
+			form.submit();
+ 	 	}
+		});
+	});
+	</script>
+	{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="span12">
+    <h3>Modify Controlled Terminology</h3>
+  	 <form id="code-form" action="" method="post" enctype="multipart/form-data" class="cmxform">
+  		 <fieldset>
+  			<legend>Controlled Terminology Term Modification</legend>
+  			<div class="control-group">
+  				<label for="code_name">Coded Term:</label>
+  				<input type="string" name="code_name" size="80" class="required" value="{{ code.name }}"/>
+  			</div>
+  			<div class="control-group">
+  				<label for="code_name">Assigned C-code:</label>
+  				<input type="string" name="code_code" size="80" class="required" value="{{code.code}}"/>
+  			</div>
+  			<div class="control-group">
+  				<label for="code_name">Term Context:</label>
+  				<input type="radio" name="code_context" value="BRIDG" {% if code.terminology_type == "BRIDG" %}checked{% endif %}>BRIDG</input>
+  				<input type="radio" name="code_context" value="VAR" {% if code.terminology_type == "VAR" %}checked{% endif %}>VAR</input>
+  			</div>
+  			<div class="form-actions">
+  				<!-- <button type="button" class="btn btn-primary" data-loading-text="Loading...">Load Content Template</button> -->
+  				<input class="submit" name="sub" type="submit" value="Submit"/>
+  			</div>
+  		</fieldset>
+    </form>
+  </div>
+</div>
+{% endblock %}

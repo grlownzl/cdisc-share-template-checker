@@ -43,6 +43,11 @@ class ConsistencyFinding(db.Model):
 class CodedTerminology(db.Model):
   name = db.StringProperty(verbose_name="Term to be coded", required=True)
   code = db.StringProperty(verbose_name="Assigned C-code")  
+  terminology_type = db.StringProperty(verbose_name="Terminology Context")
+  #contained_in = db.ListProperty(db.StringProperty)
   
   def is_coded(self):
-    return self.code != None
+    return self.code not in [None, "CNEW"]
+  
+  def as_dict(self):
+    return {'name' : self.name, 'code' : self.code, 'terminology_type' : self.terminology_type}

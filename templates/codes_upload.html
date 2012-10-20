@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Codes Sheet{% endblock %}
+
+{% block head %}
+	<script type="text/javascript" src="/js/jquery.validate.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('#terminology-form').validate({
+		 submitHandler: function(form) {
+			//$().button('loading');
+			form.submit();
+ 	 	}
+		});
+	});
+	</script>
+	{% endblock %}
+
+{% block content %}
+	<div class="span10">
+		 <form id="terminology-form" action="" method="post" enctype="multipart/form-data" class="cmxform">
+			 <fieldset>
+				<legend>Content Terminology Sheet Uploader</legend>
+				<div class="control-group">
+					<label for="terminology_sheet">Path to Content Terminology Workbook</label>
+					<input type="file" name="terminology_sheet" size="80" class="required"/>
+				</div>
+				<div class="form-actions">
+					<!-- <button type="button" class="btn btn-primary" data-loading-text="Loading...">Load Content Template</button> -->
+					<input class="submit" name="sub" type="submit" value="Submit"/>
+				</div>
+			</fieldset>
+	  </form>
+	</div>
+	
+{% endblock %}

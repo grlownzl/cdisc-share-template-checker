@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Content Terminology{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="span12">
+    <h3>Assigned Controlled Terminology</h3>
+    <p><a href="/terminology/codes/new">Add new coded term</a></p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Term</th>
+          <th>Assigned C-code</th>
+          <th>Term Context</th>
+          <th>Term used in:</th>
+          <th/>
+        </tr>
+      </thead>
+      <tbody>
+        {% for codeset in codesets %}
+          <tr>
+            <td>{{ codeset.name|escape }}</td>
+            <td>{{ codeset.code }}</td>
+            <td>{{ codeset.terminology_type }}</td>
+            <td>{{ codeset.contained_in|join(', ') }}</td>
+            <td><a href="/terminology/code/{{ codeset.key().id() }}/">Modify</a>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
